@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#128c5e">
+  <title>Classeur WA</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon-192.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="top">
+      <h1>Classeur WA</h1>
+      <details class="menu">
+        <summary aria-label="Menu">⋮</summary>
+        <div class="menu-pop">
+          <button type="button" id="btn-export">Exporter une sauvegarde</button>
+          <label class="as-btn">Importer une sauvegarde
+            <input id="file-import" type="file" accept="application/json,.json" hidden>
+          </label>
+          <p id="storage-info" class="muted small"></p>
+        </div>
+      </details>
+    </div>
+    <input id="search" type="search" placeholder="Rechercher : texte, #tag, note…" autocomplete="off">
+    <div id="kinds" class="chips scroll"></div>
+    <div id="tags" class="chips scroll"></div>
+  </header>
+
+  <main>
+    <p id="count" class="muted small"></p>
+    <div id="list"></div>
+    <div id="empty" class="empty" hidden>
+      <p><strong>Rien ici pour l'instant.</strong></p>
+      <p>Dans WhatsApp, appuie longuement sur un message, puis <em>Partager</em> et choisis <em>Classeur WA</em>.
+        Pour un texte sans bouton Partager : <em>Copier</em>, puis le bouton + ici.</p>
+    </div>
+    <p id="noresult" class="muted empty" hidden>Aucun résultat pour ces filtres.</p>
+  </main>
+
+  <button type="button" id="fab" class="fab" aria-label="Ajouter manuellement">+</button>
+
+  <dialog id="editor">
+    <form id="editor-form" novalidate>
+      <h2 id="ed-title">Classer</h2>
+      <div id="ed-files" class="ed-files"></div>
+      <label>Contenu
+        <textarea id="ed-text" rows="5"></textarea>
+      </label>
+      <button type="button" id="ed-paste" class="link-btn">Coller depuis le presse-papiers</button>
+      <label>Lien
+        <input id="ed-url" type="text" inputmode="url" placeholder="https://…" autocomplete="off">
+      </label>
+      <label>Tags <span class="muted small">(virgules ou espaces)</span>
+        <input id="ed-tags" type="text" autocomplete="off" autocapitalize="none" placeholder="recette, boulot, à-lire">
+      </label>
+      <div id="ed-suggest" class="chips"></div>
+      <label>Note perso
+        <textarea id="ed-note" rows="2"></textarea>
+      </label>
+      <label class="check"><input type="checkbox" id="ed-pinned"> Épingler en haut de la liste</label>
+      <div class="actions">
+        <button type="button" id="ed-delete" class="danger">Supprimer</button>
+        <span class="spacer"></span>
+        <button type="button" id="ed-cancel">Annuler</button>
+        <button type="submit" class="primary">Enregistrer</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <script src="db.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
